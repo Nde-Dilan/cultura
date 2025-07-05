@@ -39,7 +39,7 @@ class ScenariosPage extends StatelessWidget {
                   height: 80,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFFFF6B35), Color(0xFFFF8A50)],
+                      colors: [Color(0xFF5D340A), Color(0xFFFF8A50)],
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -192,13 +192,13 @@ class ScenarioCard extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B35).withOpacity(0.1),
+                color: Color(0xFF5D340A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Icon(
                 icon,
                 size: 30,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
               ),
             ),
             SizedBox(width: 16),
@@ -303,7 +303,7 @@ class ScenarioCard extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: Text(
               'Got it',
-              style: TextStyle(color: Color(0xFFFF6B35)),
+              style: TextStyle(color: Color(0xFF5D340A)),
             ),
           ),
         ],

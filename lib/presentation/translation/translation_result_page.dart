@@ -352,13 +352,13 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B35).withOpacity(0.1),
+                color: Color(0xFF5D340A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
                 size: 22,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
               ),
             ),
             SizedBox(width: 16),
@@ -409,7 +409,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
                 Text('File path copied to clipboard'),
               ],
             ),
-            backgroundColor: Color(0xFFFF6B35),
+            backgroundColor: Color(0xFF5D340A),
             duration: Duration(seconds: 2),
           ),
         );
@@ -490,7 +490,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFFFF6B35)),
+                            AlwaysStoppedAnimation<Color>(Color(0xFF5D340A)),
                       ),
                     ),
                   ),
@@ -512,7 +512,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF6B35)),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF5D340A)),
           ),
           SizedBox(height: 20),
           Text(
@@ -534,12 +534,12 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
-          color: Color(0xFFFF6B35).withOpacity(0.1),
+          color: Color(0xFF5D340A).withOpacity(0.1),
           child: Row(
             children: [
               Icon(
                 HugeIcons.strokeRoundedCheckmarkCircle02,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
                 size: 20,
               ),
               SizedBox(width: 8),
@@ -547,7 +547,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
                 child: Text(
                   'Translation completed for "${widget.translationResult.fileName}"',
                   style: TextStyle(
-                    color: Color(0xFFFF6B35),
+                    color: Color(0xFF5D340A),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -557,7 +557,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF6B35),
+                    color: Color(0xFF5D340A),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -625,7 +625,7 @@ class _TranslationResultPageState extends State<TranslationResultPage> {
           ElevatedButton(
             onPressed: _generatePdfFromMarkdown,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFFF6B35),
+              backgroundColor: Color(0xFF5D340A),
               foregroundColor: Colors.white,
             ),
             child: Text('Retry'),

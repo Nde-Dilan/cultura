@@ -1,0 +1,4 @@
+enum GameLayout {
+  twoColumns,
+  fourColumns,
+}

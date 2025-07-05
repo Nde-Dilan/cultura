@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cultura/presentation/main/pages/media_library_page.dart';
+import 'package:cultura/presentation/play/pages/play_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:cultura/common/loading_builder.dart';
@@ -30,6 +31,8 @@ const Color darkColor = Color(0xFF0C0C0C);
 const Color backgroundColor = Color(0xFF030326);
 const Color systemChrome = Color(0xFF0F9D58);
 const Color scaffoldBgColor = Color(0xFFFFFBF0);
+const Color teal = Colors.teal;
+
 const Color white = Color.fromARGB(255, 255, 255, 255);
 const Color disabledColor = Color(0xFF8D8D8D);
 const Color listenButton = Color(0xFFD9FFE0);
@@ -41,12 +44,12 @@ const Color warningColor = Color(0xFFF4B400);
 const Color infoColor = Color(0xFF6424EC);
 
 // Primary color
-MaterialColor seedColorPalette = MaterialColor(0xFFFF6B35, const <int, Color>{
+MaterialColor seedColorPalette = MaterialColor(0xFF5D340A, const <int, Color>{
   50: Color(0xFFFFECE6),
   100: Color(0xFFFFD9CD),
   200: Color(0xFFFFB39B),
   300: Color(0xFFFF8D69),
-  400: Color(0xFFFF6B35),
+  400: Color(0xFF5D340A),
   500: Color(0xFFFF5A20),
   600: Color(0xFFE6481C),
   700: Color(0xFFCC3919),
@@ -103,21 +106,21 @@ final mockStats = LearningStats(
 final List<Widget> kTabPages = [
   const HomePage(),
   const MediaLibraryPage(),
-  const LoginPage(),
+  const PlayPage(),
   const ProfileScreen(),
 ];
 
 final List<IconData> tabIcons = [
   HugeIcons.strokeRoundedHome02,
   HugeIcons.strokeRoundedMedal02,
-  HugeIcons.strokeRoundedSchool01,
+  HugeIcons.strokeRoundedPlay,
   HugeIcons.strokeRoundedUser,
 ];
 
 final List<String> tabNames = [
   'Home',
   'Media',
-  'Dojo', //TODO: Explain to him that its the revision page
+  'Play', //TODO: Explain to him that its the revision page
   'Profile', //TODO: Can implement settings into profile or vice versa
 ];
 

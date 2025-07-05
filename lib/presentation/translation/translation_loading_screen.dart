@@ -105,7 +105,7 @@ class _TranslationLoadingScreenState extends State<TranslationLoadingScreen>
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF6B35).withOpacity(0.1),
+                  color: Color(0xFF5D340A).withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: AnimatedBuilder(
@@ -116,7 +116,7 @@ class _TranslationLoadingScreenState extends State<TranslationLoadingScreen>
                       child: Icon(
                         HugeIcons.strokeRoundedTranslate,
                         size: 50,
-                        color: Color(0xFFFF6B35),
+                        color: Color(0xFF5D340A),
                       ),
                     );
                   },
@@ -161,7 +161,7 @@ class _TranslationLoadingScreenState extends State<TranslationLoadingScreen>
                         width: 12,
                         height: 12,
                         decoration: BoxDecoration(
-                          color: Color(0xFFFF6B35).withOpacity(
+                          color: Color(0xFF5D340A).withOpacity(
                             _pulseAnimation.value *
                                 (index == 0
                                     ? 1.0
@@ -236,7 +236,7 @@ class _TranslationLoadingScreenState extends State<TranslationLoadingScreen>
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF6B35)),
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF5D340A)),
             ),
           )
         else

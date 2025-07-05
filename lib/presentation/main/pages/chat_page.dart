@@ -77,7 +77,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6B35),
+        backgroundColor: Color(0xFF5D340A),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -161,7 +161,7 @@ class _ChatPageState extends State<ChatPage> {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFF6B35),
+                      color: Color(0xFF5D340A),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Icon(
@@ -239,7 +239,7 @@ class ChatBubble extends StatelessWidget {
           if (!message.isUser) ...[
             CircleAvatar(
               radius: 16,
-              backgroundColor: Color(0xFFFF6B35),
+              backgroundColor: Color(0xFF5D340A),
               child: Icon(
                 HugeIcons.strokeRoundedRobotic,
                 size: 18,
@@ -252,7 +252,7 @@ class ChatBubble extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: message.isUser ? Color(0xFFFF6B35) : Colors.white,
+                color: message.isUser ? Color(0xFF5D340A) : Colors.white,
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(

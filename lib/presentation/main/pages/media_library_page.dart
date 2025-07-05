@@ -306,7 +306,7 @@ class FilterTabs extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Color(0xFFFF6B35) : Colors.grey[200],
+          color: isSelected ? Color(0xFF5D340A) : Colors.grey[200],
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -342,7 +342,7 @@ class MediaGrid extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
-        childAspectRatio: 0.65,
+        childAspectRatio: 0.75,
       ),
       itemCount: mediaItems.length,
       itemBuilder: (context, index) {
@@ -407,7 +407,7 @@ class MediaCard extends StatelessWidget {
                         child: Icon(
                           mediaItem.icon,
                           size: 40,
-                          color: Color(0xFFFF6B35),
+                          color: Color(0xFF5D340A),
                         ),
                       ),
                     // Delete button
@@ -512,7 +512,7 @@ class MediaCard extends StatelessWidget {
             child: Icon(
               HugeIcons.strokeRoundedImage01,
               size: 40,
-              color: Color(0xFFFF6B35),
+              color: Color(0xFF5D340A),
             ),
           );
         },
@@ -680,12 +680,12 @@ class MediaActionsBottomSheet extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF6B35).withOpacity(0.1),
+                  color: Color(0xFF5D340A).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   _getTypeIcon(),
-                  color: Color(0xFFFF6B35),
+                  color: Color(0xFF5D340A),
                   size: 24,
                 ),
               ),
@@ -781,13 +781,13 @@ class ActionTile extends StatelessWidget {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B35).withOpacity(0.1),
+                color: Color(0xFF5D340A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
                 size: 22,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
               ),
             ),
             SizedBox(width: 16),

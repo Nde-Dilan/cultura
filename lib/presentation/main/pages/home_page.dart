@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>
       child: BlocProvider(
         create: (context) => UserInfoDisplayCubit()..displayUserInfo(),
         child: Scaffold(
-          backgroundColor: Colors.grey[100],
+          backgroundColor: scaffoldBgColor,
           body: RepaintBoundary(
             child: AnimatedSwitcher(
               duration: duration,
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage>
                 margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 16.0),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFF6B35),
+                  // color: const Color(0xFF5D340A),
                   borderRadius: BorderRadius.circular(25),
                   // boxShadow: [
                   //   BoxShadow(
@@ -109,12 +109,7 @@ class _HomePageState extends State<HomePage>
                     indicatorSize: TabBarIndicatorSize.label,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
-                    labelColor: seedColorPalette.shade700,
-                    unselectedLabelColor: seedColorPalette.shade800,
-                    indicatorColor: seedColorPalette.shade400,
-                    overlayColor: WidgetStateProperty.all(
-                      seedColorPalette.shade50,
-                    ),
+                   
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -200,8 +195,8 @@ class SilverHeader extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.grey[300]!,
-                    Colors.grey[400]!,
+                    Color(0xFF627B3F)!,
+                    Color.fromARGB(255, 151, 221, 52)!,
                   ],
                 ),
               ),
@@ -268,8 +263,9 @@ class OrangeGreetingCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFFF6B35),
-            Color(0xFFFF8A50),
+            Color.fromARGB(255, 195, 119, 44),
+            Color(0xFF5D340A),
+            // Color(0xFFFF8A50),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
@@ -295,7 +291,7 @@ class OrangeGreetingCard extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Text(
-            'What do you\nwant to translate\ntoday?',
+            'What do you want\nto translate\ntoday?',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -450,13 +446,13 @@ class TranslationOptionCard extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B35).withOpacity(0.1),
+                color: Color(0xFF5D340A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Icon(
                 icon,
                 size: 28,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
               ),
             ),
             SizedBox(height: 12),
@@ -530,7 +526,7 @@ class RecentTranslationsSection extends StatelessWidget {
                     Text(
                       'EN → ES',
                       style: TextStyle(
-                        color: Color(0xFFFF6B35),
+                        color: Color(0xFF5D340A),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -732,13 +728,13 @@ class MoreOptionTile extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B35).withOpacity(0.1),
+                color: Color(0xFF5D340A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
                 size: 24,
-                color: Color(0xFFFF6B35),
+                color: Color(0xFF5D340A),
               ),
             ),
             SizedBox(width: 16),
