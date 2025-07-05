@@ -20,7 +20,7 @@ class _FallingGamePageState extends State<FallingGamePage>
   bool _isGameRunning = false;
   bool _isGamePaused = false;
   bool _soundEnabled = true;
-  
+
   // Game controller
   late AnimationController _gameController;
   late AnimationController _pulseController;
@@ -36,7 +36,7 @@ class _FallingGamePageState extends State<FallingGamePage>
       duration: Duration(milliseconds: 100),
       vsync: this,
     );
-    
+
     _pulseController = AnimationController(
       duration: Duration(milliseconds: 800),
       vsync: this,
@@ -58,7 +58,7 @@ class _FallingGamePageState extends State<FallingGamePage>
       _isGameRunning = true;
       _isGamePaused = false;
     });
-    
+
     // Add your game logic here
   }
 
@@ -193,7 +193,7 @@ class _FallingGamePageState extends State<FallingGamePage>
           ),
           // Game Area
           Expanded(
-            child: _isGameRunning 
+            child: _isGameRunning
                 ? GameArea(
                     isGamePaused: _isGamePaused,
                     pulseController: _pulseController,
@@ -318,8 +318,8 @@ class GameHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        soundEnabled 
-                            ? HugeIcons.strokeRoundedVolumeHigh 
+                        soundEnabled
+                            ? HugeIcons.strokeRoundedVolumeHigh
                             : HugeIcons.strokeRoundedVolumeMute01,
                         color: Colors.white,
                         size: 20,
@@ -443,72 +443,14 @@ class GameStartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Game icon
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFFFF6B35),
-                  Color(0xFFFF8A50),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xFFFF6B35).withOpacity(0.3),
-                  blurRadius: 20,
-                  offset: Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Icon(
-              HugeIcons.strokeRoundedGameController01,
-              size: 60,
-              color: Colors.white,
-            ),
-          ),
-          SizedBox(height: 30),
-          
-          // Game title
-          Text(
-            'Word Drop',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
-            ),
-          ),
-          SizedBox(height: 10),
-          
-          // Game description
-          Text(
-            'Catch falling words and match them\nwith their correct translations!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-              height: 1.4,
-            ),
-          ),
-          SizedBox(height: 40),
-          
-          // Game instructions
-          GameInstructionCard(),
-          SizedBox(height: 40),
-          
-          // Start button
-          GestureDetector(
-            onTap: onStart,
-            child: Container(
-              width: double.infinity,
-              height: 60,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Game icon
+            Container(
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -518,28 +460,88 @@ class GameStartScreen extends StatelessWidget {
                     Color(0xFFFF8A50),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
                     color: Color(0xFFFF6B35).withOpacity(0.3),
-                    blurRadius: 15,
-                    offset: Offset(0, 5),
+                    blurRadius: 20,
+                    offset: Offset(0, 10),
                   ),
                 ],
               ),
-              child: Center(
-                child: Text(
-                  'Start Game',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              child: Icon(
+                HugeIcons.strokeRoundedGameController01,
+                size: 60,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 30),
+
+            // Game title
+            Text(
+              'Word Drop',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+              ),
+            ),
+            SizedBox(height: 10),
+
+            // Game description
+            Text(
+              'Catch falling words and match them\nwith their correct translations!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+                height: 1.4,
+              ),
+            ),
+            SizedBox(height: 40),
+
+            // Game instructions
+            GameInstructionCard(),
+            SizedBox(height: 40),
+
+            // Start button
+            GestureDetector(
+              onTap: onStart,
+              child: Container(
+                width: double.infinity,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFFF6B35),
+                      Color(0xFFFF8A50),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFFF6B35).withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    'Start Game',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -660,7 +662,7 @@ class GameArea extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Game content
           Center(
             child: Text(
@@ -672,7 +674,7 @@ class GameArea extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Pause overlay
           if (isGamePaused)
             Container(
@@ -764,7 +766,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          
+
           // Title
           Text(
             'Game Paused',
@@ -775,7 +777,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30),
-          
+
           // Menu options
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedPlay,
@@ -784,7 +786,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onResume,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedRefresh,
             title: 'Restart Game',
@@ -792,17 +794,17 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onRestart,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
-            icon: soundEnabled 
-                ? HugeIcons.strokeRoundedVolumeHigh 
+            icon: soundEnabled
+                ? HugeIcons.strokeRoundedVolumeHigh
                 : HugeIcons.strokeRoundedVolumeMute01,
             title: soundEnabled ? 'Sound On' : 'Sound Off',
             subtitle: 'Toggle game sounds',
             onTap: onSoundToggle,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedLogout01,
             title: 'Exit Game',
@@ -810,7 +812,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onExit,
             isDestructive: true,
           ),
-          
+
           SizedBox(height: 20),
         ],
       ),
@@ -838,7 +840,7 @@ class PauseMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isDestructive ? Colors.red : Color(0xFFFF6B35);
-    
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
