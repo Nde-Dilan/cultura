@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "3563496585",
+    "project_id": "cultura-v1",
+    "storage_bucket": "cultura-v1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3563496585:android:4a23d992bb29448b081258",
+        "android_client_info": {
+          "package_name": "com.Cultura.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3563496585-8714otbr60jondhmbcinbr5ev9at55dv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Cultura.app",
+            "certificate_hash": "d6bb58e478814555776a45cd5f9ce38d4743513e"
+          }
+        },
+        {
+          "client_id": "3563496585-c79jfu0doqcjm4agg05jdq0n4409bq9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Cultura.app",
+            "certificate_hash": "ef5335ef6f6653a828e5e1ecf6ba8041ddf48f25"
+          }
+        },
+        {
+          "client_id": "3563496585-pglvfbfojcieoaips8u672vm1peqlaha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATQNsgMMZorHAhO_RsZXoFtvGf9k0lKqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3563496585-pglvfbfojcieoaips8u672vm1peqlaha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

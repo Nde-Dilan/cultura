@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "3563496585",
+    "project_id": "cultura-v1",
+    "storage_bucket": "cultura-v1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3563496585:android:4a23d992bb29448b081258",
+        "android_client_info": {
+          "package_name": "com.Cultura.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATQNsgMMZorHAhO_RsZXoFtvGf9k0lKqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
