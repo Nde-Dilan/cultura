@@ -51,7 +51,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.2
   pie_menu: ^3.2.7
   just_audio: ^0.9.42
-  share_plus: ^10.1.4
+  share_plus: ^11.0.0
   cached_network_image: ^3.4.1
   showcaseview: ^4.0.1
   flutter_ai_toolkit: ^0.6.8
@@ -60,6 +60,9 @@ dependencies:
   shared_preferences: ^2.5.2
   google_fonts: ^6.2.1
   flutter_doc_scanner: ^0.0.16
+  file_picker: ^10.2.0
+  syncfusion_flutter_pdf: ^30.1.38
+  syncfusion_flutter_pdfviewer: ^30.1.38
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cultura/presentation/main/pages/media_library_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:cultura/common/loading_builder.dart';
@@ -101,21 +102,21 @@ final mockStats = LearningStats(
 
 final List<Widget> kTabPages = [
   const HomePage(),
-  const DictionaryPage(),
+  const MediaLibraryPage(),
   const LoginPage(),
   const ProfileScreen(),
 ];
 
 final List<IconData> tabIcons = [
   HugeIcons.strokeRoundedHome02,
-  HugeIcons.strokeRoundedBook02,
+  HugeIcons.strokeRoundedMedal02,
   HugeIcons.strokeRoundedSchool01,
   HugeIcons.strokeRoundedUser,
 ];
 
 final List<String> tabNames = [
   'Home',
-  'Words',
+  'Media',
   'Dojo', //TODO: Explain to him that its the revision page
   'Profile', //TODO: Can implement settings into profile or vice versa
 ];

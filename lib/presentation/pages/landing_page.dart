@@ -14,34 +14,17 @@ class LandingPage extends StatefulWidget {
 //TODO: Reduce the duration and size of that song
 
 class _LandingPageState extends State<LandingPage> {
-  late AudioService _audioService;
-
+ 
   @override
   void initState() {
-    super.initState();
-    _audioService = AudioService();
-    _initAudioAsync();
+    super.initState(); 
   }
 
-  Future<void> _initAudioAsync() async {
-    try {
-      // Ensure initialization happens on main thread
-      WidgetsFlutterBinding.ensureInitialized();
-
-      // Initialize audio in background
-      Future.microtask(() async {
-        await _audioService.initialize();
-        await _audioService.play();
-      });
-    } catch (e) {
-      debugPrint('Audio initialization error: $e');
-    }
-  }
+ 
 
   @override
   void dispose() {
-    _audioService.dispose();
-    super.dispose();
+     super.dispose();
   }
 
   @override

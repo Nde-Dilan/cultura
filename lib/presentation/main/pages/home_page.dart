@@ -1,5 +1,8 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:cultura/common/services/document_scanning_service.dart';
+import 'package:cultura/common/services/file_import_service.dart';
+import 'package:cultura/presentation/main/pages/media_library_page.dart';
 import 'package:cultura/presentation/main/pages/scenario_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -204,17 +207,23 @@ class SilverHeader extends StatelessWidget {
               ),
             ),
           ),
+          //TODO: Add drawer
+          // Positioned(
+          //   top: 30,
+          //   left: 5,
+          //   child: UserAvatar(user: user),
+          // ),
           // Orange card
           Positioned(
             top: 40,
-            left: 20,
+            left: 30,
             right: 80,
             child: OrangeGreetingCard(userName: user.firstName),
           ),
           // User avatar
           Positioned(
             top: 30,
-            right: 20,
+            right: 10,
             child: UserAvatar(user: user),
           ),
         ],
@@ -324,14 +333,12 @@ class UserAvatar extends StatelessWidget {
       child: CircleAvatar(
         radius: 28,
         backgroundColor: Colors.grey[300],
-        // backgroundImage: user?.profilePicture != null
-        //     ? NetworkImage(user.profilePicture!)
-        //     : null,
-        child: Icon(
-          Icons.person,
-          size: 30,
-          color: Colors.grey[600],
-        ),
+        backgroundImage: user?.image != null ? NetworkImage(user.image!) : null,
+        // child:  Icon(
+        //   Icons.person,
+        //   size: 30,
+        //   color: Colors.grey[600],
+        // ),
       ),
     );
   }
@@ -398,8 +405,7 @@ class TranslationOptionsGrid extends StatelessWidget {
           icon: HugeIcons.strokeRoundedChatting01,
           label: 'Cult AI',
           onTap: () {
-             AppNavigator.push(context, const ScenariosPage());
-
+            AppNavigator.push(context, const ScenariosPage());
           },
         ),
       ],
@@ -551,8 +557,53 @@ void _showMoreOptionsBottomSheet(BuildContext context) {
 }
 
 // More Options Bottom Sheet Widget
-class MoreOptionsBottomSheet extends StatelessWidget {
+class MoreOptionsBottomSheet extends StatefulWidget {
   const MoreOptionsBottomSheet({super.key});
+
+  @override
+  State<MoreOptionsBottomSheet> createState() => _MoreOptionsBottomSheetState();
+}
+
+class _MoreOptionsBottomSheetState extends State<MoreOptionsBottomSheet> {
+  Future<void> _handleScanDocument() async {
+    // Navigator.pop(context); // Close bottom sheet first
+
+    final scanService = DocumentScanningService();
+
+    try {
+      final result = await scanService.scanDocument(maxPages: 5);
+
+      if (result.isSuccess) {
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const MediaLibraryPage(),
+            ),
+          );
+        }
+      } else if (result.isCancelled) {
+        log('Scanning was cancelled by user');
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result.errorMessage ?? 'Scanning failed'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('An error occurred while scanning'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -593,9 +644,35 @@ class MoreOptionsBottomSheet extends StatelessWidget {
             icon: HugeIcons.strokeRoundedFile02,
             title: 'Import Document',
             subtitle: 'Upload and translate documents',
-            onTap: () {
-              Navigator.pop(context);
-              // Handle import document
+            onTap: () async {
+              // Store the navigator before any async operations
+              // final navigator = Navigator.of(context);
+
+              // navigator.pop(); // Close bottom sheet
+
+              final importService = FileImportService();
+
+              try {
+                final importedFiles = await importService.importDocuments();
+
+                // Check if widget is still mounted before using context
+                if (!context.mounted) return;
+
+                if (importedFiles != null && importedFiles.isNotEmpty) {
+                  // Navigate to media library
+                  AppNavigator.push(context, const MediaLibraryPage());
+                }
+              } catch (e) {
+                // Handle any import errors
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('An error occurred while importing files'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
             },
           ),
           SizedBox(height: 15),
@@ -613,21 +690,9 @@ class MoreOptionsBottomSheet extends StatelessWidget {
             icon: HugeIcons.strokeRoundedCamera01,
             title: 'Camera or Scan',
             subtitle: 'Scan text from images',
-            onTap: () async {
-              final scanService = DocumentScanningService();
-              final result = await scanService.scanDocument(maxPages: 5);
-
-              if (result.isSuccess) {
-                // Document scanned and saved successfully
-                print('Scanned files: ${result.filePaths}');
-              } else if (result.isCancelled) {
-                // User cancelled scanning
-              } else {
-                // Error occurred
-                print('Error: ${result.errorMessage}');
-              }
-            },
+            onTap: () => _handleScanDocument(),
           ),
+
           SizedBox(height: 20),
         ],
       ),

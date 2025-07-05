@@ -15,12 +15,12 @@ class DocumentScanningService {
   static const String _scannedDocumentsKey = 'scanned_documents';
   static const String _documentsDirectoryName = 'scanned_documents';
 
-  /// Scans a document and returns the scanned file path
-  /// Returns null if scanning was cancelled or failed
+  // Update the DocumentScanningService scanDocument method
   Future<ScanResult> scanDocument({
     int maxPages = 10,
     bool allowGallery = true,
     bool allowCamera = true,
+    Function()? onSuccess, // Add callback for successful scanning
   }) async {
     try {
       final scannedDoc = await FlutterDocScanner().getScanDocuments(
@@ -87,13 +87,13 @@ class DocumentScanningService {
         if (filePaths.isNotEmpty) {
           // Validate that files exist and save them locally
           final savedDocuments = <ScannedDocument>[];
-          
+
           for (final path in filePaths) {
             if (path.isNotEmpty) {
               final file = File(path);
               if (await file.exists()) {
                 log('Valid file found: $path');
-                
+
                 // Save the document locally
                 final savedDoc = await _saveDocumentLocally(file);
                 if (savedDoc != null) {
@@ -119,8 +119,18 @@ class DocumentScanningService {
 
           if (savedDocuments.isNotEmpty) {
             // Save to SharedPreferences
-            await _saveDocumentsToPreferences(savedDocuments);
-            return ScanResult.success(savedDocuments.map((doc) => doc.localPath).toList());
+            await saveDocumentsToPreferences(savedDocuments);
+
+            // Call success callback if provided
+            if (onSuccess != null) {
+              log('Successss--------------------->');
+
+              onSuccess();
+              log('Successss--------------------->');
+            }
+
+            return ScanResult.success(
+                savedDocuments.map((doc) => doc.localPath).toList());
           } else {
             return ScanResult.error('No valid scanned files found');
           }
@@ -142,7 +152,7 @@ class DocumentScanningService {
       // Get app documents directory
       final appDir = await getApplicationDocumentsDirectory();
       final documentsDir = Directory('${appDir.path}/$_documentsDirectoryName');
-      
+
       // Create directory if it doesn't exist
       if (!await documentsDir.exists()) {
         await documentsDir.create(recursive: true);
@@ -156,7 +166,7 @@ class DocumentScanningService {
 
       // Copy file to local directory
       final localFile = await sourceFile.copy(localPath);
-      
+
       // Get file info
       final fileSize = await localFile.length();
       final scannedAt = DateTime.now();
@@ -179,24 +189,47 @@ class DocumentScanningService {
   }
 
   /// Save documents list to SharedPreferences
-  Future<void> _saveDocumentsToPreferences(List<ScannedDocument> newDocuments) async {
+  Future<void> saveDocumentsToPreferences(
+      List<ScannedDocument> newDocuments) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      
+
       // Get existing documents
       final existingDocs = await getSavedDocuments();
-      
+
       // Add new documents
       existingDocs.addAll(newDocuments);
-      
+
       // Convert to JSON and save
       final documentsJson = existingDocs.map((doc) => doc.toJson()).toList();
       await prefs.setString(_scannedDocumentsKey, jsonEncode(documentsJson));
-      
+
       log('Documents saved to preferences: ${newDocuments.length} new documents');
     } catch (e) {
       log('Error saving documents to preferences: $e');
     }
+  }
+
+  Future<ScannedDocument?> saveImportedDocument(File sourceFile) async {
+    return await _saveDocumentLocally(sourceFile);
+  }
+
+  /// Import and save multiple documents
+  Future<List<ScannedDocument>> importDocuments(List<File> files) async {
+    final savedDocuments = <ScannedDocument>[];
+
+    for (final file in files) {
+      final savedDoc = await _saveDocumentLocally(file);
+      if (savedDoc != null) {
+        savedDocuments.add(savedDoc);
+      }
+    }
+
+    if (savedDocuments.isNotEmpty) {
+      await saveDocumentsToPreferences(savedDocuments);
+    }
+
+    return savedDocuments;
   }
 
   /// Get all saved documents from SharedPreferences
@@ -204,12 +237,12 @@ class DocumentScanningService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final documentsJson = prefs.getString(_scannedDocumentsKey);
-      
+
       if (documentsJson != null) {
         final List<dynamic> jsonList = jsonDecode(documentsJson);
         return jsonList.map((json) => ScannedDocument.fromJson(json)).toList();
       }
-      
+
       return [];
     } catch (e) {
       log('Error getting saved documents: $e');
@@ -222,28 +255,28 @@ class DocumentScanningService {
     try {
       final documents = await getSavedDocuments();
       final docIndex = documents.indexWhere((doc) => doc.id == documentId);
-      
+
       if (docIndex != -1) {
         final document = documents[docIndex];
-        
+
         // Delete physical file
         final file = File(document.localPath);
         if (await file.exists()) {
           await file.delete();
         }
-        
+
         // Remove from list
         documents.removeAt(docIndex);
-        
+
         // Save updated list
         final prefs = await SharedPreferences.getInstance();
         final documentsJson = documents.map((doc) => doc.toJson()).toList();
         await prefs.setString(_scannedDocumentsKey, jsonEncode(documentsJson));
-        
+
         log('Document deleted: $documentId');
         return true;
       }
-      
+
       return false;
     } catch (e) {
       log('Error deleting document: $e');
@@ -256,7 +289,7 @@ class DocumentScanningService {
     try {
       // Get all documents
       final documents = await getSavedDocuments();
-      
+
       // Delete all physical files
       for (final doc in documents) {
         final file = File(doc.localPath);
@@ -264,11 +297,11 @@ class DocumentScanningService {
           await file.delete();
         }
       }
-      
+
       // Clear SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_scannedDocumentsKey);
-      
+
       // Delete documents directory if empty
       final appDir = await getApplicationDocumentsDirectory();
       final documentsDir = Directory('${appDir.path}/$_documentsDirectoryName');
@@ -278,7 +311,7 @@ class DocumentScanningService {
           await documentsDir.delete();
         }
       }
-      
+
       log('All documents cleared');
     } catch (e) {
       log('Error clearing documents: $e');
@@ -391,14 +424,14 @@ class DocumentScanningService {
     try {
       final documents = await getSavedDocuments();
       int totalBytes = 0;
-      
+
       for (final doc in documents) {
         final file = File(doc.localPath);
         if (await file.exists()) {
           totalBytes += await file.length();
         }
       }
-      
+
       return totalBytes;
     } catch (e) {
       log('Error calculating total storage: $e');
@@ -449,7 +482,8 @@ class ScannedDocument {
 
   String get formattedFileSize {
     if (fileSize < 1024) return '$fileSize B';
-    if (fileSize < 1024 * 1024) return '${(fileSize / 1024).toStringAsFixed(1)} KB';
+    if (fileSize < 1024 * 1024)
+      return '${(fileSize / 1024).toStringAsFixed(1)} KB';
     if (fileSize < 1024 * 1024 * 1024)
       return '${(fileSize / (1024 * 1024)).toStringAsFixed(1)} MB';
     return '${(fileSize / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
@@ -458,7 +492,7 @@ class ScannedDocument {
   String get formattedDate {
     final now = DateTime.now();
     final difference = now.difference(scannedAt);
-    
+
     if (difference.inDays > 7) {
       return '${scannedAt.day}/${scannedAt.month}/${scannedAt.year}';
     } else if (difference.inDays > 0) {

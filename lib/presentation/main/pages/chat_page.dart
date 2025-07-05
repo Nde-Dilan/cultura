@@ -34,6 +34,8 @@ class _ChatPageState extends State<ChatPage> {
 
   String _getInitialMessage(String scenarioId) {
     switch (scenarioId) {
+      case "all":
+        return "Hello! Welcome to your conversation hub. I'm your speaking partner today. What can I help you with?";
       case 'restaurant':
         return "Hello! Welcome to our restaurant. I'm your waiter today. What can I get you to drink?";
       case 'shopping':

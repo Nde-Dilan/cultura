@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_doc_scanner
   flutter_secure_storage_linux
   record_linux
+  syncfusion_pdfviewer_linux
   url_launcher_linux
 )
 

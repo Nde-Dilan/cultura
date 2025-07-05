@@ -76,9 +76,19 @@ class ScenariosPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               children: [
                 ScenarioCard(
+                  icon: HugeIcons.strokeRoundedAllBookmark,
+                  title: 'All & Nothing',
+                  description:
+                      'Just have a quick conversation with our AI model about everything you want!',
+                  difficulty: 'Beginner',
+                  onTap: () => _navigateToChat(context, 'all'),
+                ),
+                SizedBox(height: 16),
+                ScenarioCard(
                   icon: HugeIcons.strokeRoundedRestaurant01,
                   title: 'Restaurant',
-                  description: 'Order food, ask for recommendations, and interact with waiters',
+                  description:
+                      'Order food, ask for recommendations, and interact with waiters',
                   difficulty: 'Beginner',
                   onTap: () => _navigateToChat(context, 'restaurant'),
                 ),
@@ -86,7 +96,8 @@ class ScenariosPage extends StatelessWidget {
                 ScenarioCard(
                   icon: HugeIcons.strokeRoundedShoppingBag01,
                   title: 'Shopping',
-                  description: 'Buy clothes, ask for sizes, and negotiate prices',
+                  description:
+                      'Buy clothes, ask for sizes, and negotiate prices',
                   difficulty: 'Beginner',
                   onTap: () => _navigateToChat(context, 'shopping'),
                 ),
@@ -94,7 +105,8 @@ class ScenariosPage extends StatelessWidget {
                 ScenarioCard(
                   icon: HugeIcons.strokeRoundedHospital01,
                   title: 'Doctor Visit',
-                  description: 'Describe symptoms, understand prescriptions, and medical advice',
+                  description:
+                      'Describe symptoms, understand prescriptions, and medical advice',
                   difficulty: 'Intermediate',
                   onTap: () => _navigateToChat(context, 'doctor'),
                 ),
@@ -102,23 +114,25 @@ class ScenariosPage extends StatelessWidget {
                 ScenarioCard(
                   icon: HugeIcons.strokeRoundedBuilding01,
                   title: 'Job Interview',
-                  description: 'Practice answering questions and presenting yourself professionally',
+                  description:
+                      'Practice answering questions and presenting yourself professionally',
                   difficulty: 'Advanced',
                   onTap: () => _navigateToChat(context, 'job_interview'),
                 ),
-                SizedBox(height: 16),
-                ScenarioCard(
-                  icon: HugeIcons.strokeRoundedAirplane01,
-                  title: 'Airport/Travel',
-                  description: 'Check-in, security, and asking for directions',
-                  difficulty: 'Intermediate',
-                  onTap: () => _navigateToChat(context, 'airport'),
-                ),
+                // SizedBox(height: 16),
+                // ScenarioCard(
+                //   icon: HugeIcons.strokeRoundedAirplane01,
+                //   title: 'Airport/Travel',
+                //   description: 'Check-in, security, and asking for directions',
+                //   difficulty: 'Intermediate',
+                //   onTap: () => _navigateToChat(context, 'airport'),
+                // ),
                 SizedBox(height: 16),
                 ScenarioCard(
                   icon: HugeIcons.strokeRoundedBank,
                   title: 'Bank Visit',
-                  description: 'Open accounts, understand banking terms, and transactions',
+                  description:
+                      'Open accounts, understand banking terms, and transactions',
                   difficulty: 'Advanced',
                   onTap: () => _navigateToChat(context, 'bank'),
                 ),
@@ -204,9 +218,11 @@ class ScenarioCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: _getDifficultyColor(difficulty).withOpacity(0.1),
+                          color:
+                              _getDifficultyColor(difficulty).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -268,7 +284,8 @@ class ScenarioCard extends StatelessWidget {
     }
   }
 
-  void _showScenarioInfo(BuildContext context, String title, String description) {
+  void _showScenarioInfo(
+      BuildContext context, String title, String description) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
