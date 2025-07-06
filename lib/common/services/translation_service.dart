@@ -22,14 +22,14 @@ class TranslationService {
       log('Starting translation: "$text" from $sourceLanguage to $targetLanguage');
 
       // 1. Try local dictionary first
-      // final localResult = await _localDictionary.translateLocally(
-      //   text: text,
-      //   sourceLanguage: sourceLanguage,
-      //   targetLanguage: targetLanguage,
-      // );
-      var localResult;
+      final localResult = await _localDictionary.translateLocally(
+        text: text,
+        sourceLanguage: sourceLanguage,
+        targetLanguage: targetLanguage,
+      );
+      // var localResult;
 
-      if (localResult != null) {
+      if (localResult != null && text.split(' ').length <= 1) {
         log('Local translation found: ${localResult.translation} (confidence: ${localResult.confidence}, source: ${localResult.source})');
 
         return TranslationResult.success(

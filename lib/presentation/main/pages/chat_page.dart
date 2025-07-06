@@ -1,5 +1,7 @@
+import 'package:cultura/common/services/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:cultura/common/services/translation_service.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.scenarioId});
@@ -13,6 +15,12 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final List<ChatMessage> _messages = [];
+  final TranslationService _translationService = TranslationService();
+    final GeminiService _geminiService = GeminiService();
+  final List<String> _conversationHistory = [];
+  bool _isLoading = false;
+  int _messageCount = 0;
+  static const int _maxMessages = 6;
 
   @override
   void initState() {
@@ -20,15 +28,32 @@ class _ChatPageState extends State<ChatPage> {
     _initializeScenario();
   }
 
-  void _initializeScenario() {
-    // Add initial AI message based on scenario
+  void _initializeScenario() async {
     final initialMessage = _getInitialMessage(widget.scenarioId);
+    
     setState(() {
+      _isLoading = true;
+    });
+
+    // Translate the initial message
+    final translationResult = await _translationService.translateText(
+      text: initialMessage,
+      sourceLanguage: 'eng',
+      targetLanguage: 'fub',
+    );
+
+    setState(() {
+      _isLoading = false;
       _messages.add(ChatMessage(
-        text: initialMessage,
+        originalText: initialMessage,
+        translatedText: translationResult.isSuccess 
+            ? translationResult.translatedContent! 
+            : 'Translation failed',
         isUser: false,
         timestamp: DateTime.now(),
       ));
+      _messageCount++;
+      _conversationHistory.add('Bot: $initialMessage');
     });
   }
 
@@ -55,6 +80,8 @@ class _ChatPageState extends State<ChatPage> {
 
   String _getScenarioTitle(String scenarioId) {
     switch (scenarioId) {
+      case 'all':
+        return "All & Nothing";
       case 'restaurant':
         return "Restaurant";
       case 'shopping':
@@ -95,7 +122,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             Text(
-              'AI Practice Session',
+              'AI Practice Session (${_messageCount}/$_maxMessages messages)',
               style: TextStyle(
                 color: Colors.white.withOpacity(0.8),
                 fontSize: 12,
@@ -105,10 +132,9 @@ class _ChatPageState extends State<ChatPage> {
         ),
         actions: [
           IconButton(
-            icon:
-                Icon(HugeIcons.strokeRoundedMoreVertical, color: Colors.white),
+            icon: Icon(HugeIcons.strokeRoundedMoreVertical, color: Colors.white),
             onPressed: () {
-              // Show options menu
+              _showSessionInfo();
             },
           ),
         ],
@@ -119,8 +145,11 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(16),
-              itemCount: _messages.length,
+              itemCount: _messages.length + (_isLoading ? 1 : 0),
               itemBuilder: (context, index) {
+                if (_isLoading && index == _messages.length) {
+                  return LoadingBubble();
+                }
                 return ChatBubble(message: _messages[index]);
               },
             ),
@@ -143,25 +172,30 @@ class _ChatPageState extends State<ChatPage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
+                    enabled: !_isLoading && _messageCount < _maxMessages,
                     decoration: InputDecoration(
-                      hintText: 'Type your message...',
+                      hintText: _messageCount >= _maxMessages 
+                          ? 'Session completed' 
+                          : 'Type your message in English...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                         borderSide: BorderSide(color: Colors.grey[300]!),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
+                    onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
                 SizedBox(width: 12),
                 GestureDetector(
-                  onTap: _sendMessage,
+                  onTap: _isLoading || _messageCount >= _maxMessages ? null : _sendMessage,
                   child: Container(
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Color(0xFF5D340A),
+                      color: _isLoading || _messageCount >= _maxMessages 
+                          ? Colors.grey[400] 
+                          : Color(0xFF5D340A),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Icon(
@@ -179,29 +213,142 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _sendMessage() {
-    if (_messageController.text.trim().isEmpty) return;
 
-    setState(() {
-      _messages.add(ChatMessage(
-        text: _messageController.text.trim(),
-        isUser: true,
-        timestamp: DateTime.now(),
-      ));
-    });
+  void _sendMessage() async {
+    if (_messageController.text.trim().isEmpty || _isLoading || _messageCount >= _maxMessages) return;
 
+    final userMessage = _messageController.text.trim();
     _messageController.clear();
 
-    // Simulate AI response (you'll replace this with actual AI integration)
-    Future.delayed(Duration(seconds: 1), () {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // 1. Translate user message
+      final userTranslationResult = await _translationService.translateText(
+        text: userMessage,
+        sourceLanguage: 'eng',
+        targetLanguage: 'fub',
+      );
+
+      // 2. Add user message to chat
       setState(() {
         _messages.add(ChatMessage(
-          text: "That's great! Let me help you with that...",
+          originalText: userMessage,
+          translatedText: userTranslationResult.isSuccess 
+              ? userTranslationResult.translatedContent! 
+              : 'Translation failed',
+          isUser: true,
+          timestamp: DateTime.now(),
+        ));
+        _messageCount++;
+        _conversationHistory.add('User: $userMessage');
+      });
+
+      // 3. Check if we've reached the message limit
+      if (_messageCount >= _maxMessages) {
+        setState(() {
+          _isLoading = false;
+        });
+        _showSessionComplete();
+        return;
+      }
+
+      // 4. Generate AI response using Gemini
+      final geminiResponse = await _geminiService.generateConversationResponse(
+        userMessage: userMessage,
+        scenarioId: widget.scenarioId,
+        conversationHistory: _conversationHistory,
+      );
+
+      final aiResponse = geminiResponse.content ?? 'Sorry, I couldn\'t generate a response.';
+
+      // 5. Translate AI response
+      final aiTranslationResult = await _translationService.translateText(
+        text: aiResponse,
+        sourceLanguage: 'eng',
+        targetLanguage: 'fub',
+      );
+
+      // 6. Add AI message to chat
+      setState(() {
+        _messages.add(ChatMessage(
+          originalText: aiResponse,
+          translatedText: aiTranslationResult.isSuccess 
+              ? aiTranslationResult.translatedContent! 
+              : 'Translation failed',
           isUser: false,
           timestamp: DateTime.now(),
         ));
+        _messageCount++;
+        _conversationHistory.add('Bot: $aiResponse');
+        _isLoading = false;
       });
-    });
+
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      _showError('Failed to process message: ${e.toString()}');
+    }
+  }
+
+  
+  void _showSessionInfo() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Session Info'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Scenario: ${_getScenarioTitle(widget.scenarioId)}'),
+            SizedBox(height: 8),
+            Text('Messages: $_messageCount/$_maxMessages'),
+            SizedBox(height: 8),
+            Text('Languages: English ↔ Fulfulde'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close', style: TextStyle(color: Color(0xFF5D340A))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSessionComplete() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Session Complete!'),
+        content: Text('You\'ve completed the practice session. Great job!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Text('Back to Scenarios', style: TextStyle(color: Color(0xFF5D340A))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override
@@ -212,12 +359,14 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 class ChatMessage {
-  final String text;
+  final String originalText;
+  final String translatedText;
   final bool isUser;
   final DateTime timestamp;
 
   ChatMessage({
-    required this.text,
+    required this.originalText,
+    required this.translatedText,
     required this.isUser,
     required this.timestamp,
   });
@@ -262,12 +411,30 @@ class ChatBubble extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Text(
-                message.text,
-                style: TextStyle(
-                  color: message.isUser ? Colors.white : Colors.grey[800],
-                  fontSize: 16,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Original text
+                  Text(
+                    message.originalText,
+                    style: TextStyle(
+                      color: message.isUser ? Colors.white : Colors.grey[800],
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  // Translated text in italic
+                  Text(
+                    message.translatedText,
+                    style: TextStyle(
+                      color: message.isUser 
+                          ? Colors.white.withOpacity(0.8) 
+                          : Colors.grey[600],
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -283,6 +450,64 @@ class ChatBubble extends StatelessWidget {
               ),
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+class LoadingBubble extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: Color(0xFF5D340A),
+            child: Icon(
+              HugeIcons.strokeRoundedRobotic,
+              size: 18,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(width: 8),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF5D340A)),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  'Translating...',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

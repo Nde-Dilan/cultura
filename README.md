@@ -9,7 +9,7 @@
 
 ## 📝 Description
 
-Cultura is a mobile application dedicated to preserving and revitalizing Cameroon's vernacular languages. Built with Flutter, it provides an interactive and engaging platform for learning local languages through various features including flashcards, stories, and cultural content.
+Cultura is a mobile application dedicated to preserving and revitalizing Cameroon's vernacular languages. Built with Flutter, it provides an interactive and engaging platform for learning local languages through various features including translations, stories, and cultural content.
 
 ## ✨ Features
 
@@ -52,7 +52,7 @@ Cultura is a mobile application dedicated to preserving and revitalizing Cameroo
 
 ```bash
 # Clone the repository
-git clone https://github.com/Nde-Dilan/Cultura-app.git
+git clone https://github.com/Nde-Dilan/Cultura.git
 
 # Navigate to the project directory
 cd Cultura-app
