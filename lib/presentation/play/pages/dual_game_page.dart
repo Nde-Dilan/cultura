@@ -20,17 +20,17 @@ class _DualGamePageState extends State<DualGamePage>
   bool _isGamePaused = false;
   bool _soundEnabled = true;
   bool _gameCompleted = false;
-  
+
   // Game controller
   late AnimationController _gameController;
   late AnimationController _pulseController;
-  
+
   // Word matching game state
   String? _selectedLeftWord;
   String? _selectedRightWord;
   List<String> _leftWords = [];
   List<String> _rightWords = [];
-  
+
   // Sample word pairs for demo
   final Map<String, String> _wordPairs = {
     'Hello': 'Bonjour',
@@ -54,12 +54,12 @@ class _DualGamePageState extends State<DualGamePage>
       duration: Duration(milliseconds: 100),
       vsync: this,
     );
-    
+
     _pulseController = AnimationController(
       duration: Duration(milliseconds: 800),
       vsync: this,
     )..repeat(reverse: true);
-    
+
     _setupWordPairs();
   }
 
@@ -86,7 +86,7 @@ class _DualGamePageState extends State<DualGamePage>
       _selectedLeftWord = null;
       _selectedRightWord = null;
     });
-    
+
     _setupWordPairs();
     _startTimer();
   }
@@ -148,7 +148,7 @@ class _DualGamePageState extends State<DualGamePage>
           _selectedLeftWord = null;
           _selectedRightWord = null;
         });
-        
+
         // Check if game completed
         if (_leftWords.isEmpty) {
           _endGame();
@@ -186,11 +186,11 @@ class _DualGamePageState extends State<DualGamePage>
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              _leftWords.isEmpty 
-                  ? HugeIcons.strokeRoundedStackStar 
+              _leftWords.isEmpty
+                  ? HugeIcons.strokeRoundedStackStar
                   : HugeIcons.strokeRoundedTime04,
               size: 60,
-              color: Color(0xFFFF6B35),
+              color: Color(0xFF5D340A),
             ),
             SizedBox(height: 16),
             Text(
@@ -231,7 +231,7 @@ class _DualGamePageState extends State<DualGamePage>
               _startGame();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFFF6B35),
+              backgroundColor: Color(0xFF5D340A),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -298,7 +298,7 @@ class _DualGamePageState extends State<DualGamePage>
           ),
           // Game Area
           Expanded(
-            child: _isGameRunning 
+            child: _isGameRunning
                 ? DualGameArea(
                     isGamePaused: _isGamePaused,
                     pulseController: _pulseController,
@@ -427,8 +427,8 @@ class GameHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        soundEnabled 
-                            ? HugeIcons.strokeRoundedVolumeHigh 
+                        soundEnabled
+                            ? HugeIcons.strokeRoundedVolumeHigh
                             : HugeIcons.strokeRoundedVolumeMute01,
                         color: Colors.white,
                         size: 20,
@@ -452,7 +452,7 @@ class GameHeader extends StatelessWidget {
                       icon: HugeIcons.strokeRoundedActivity02,
                       label: 'Score',
                       value: score.toString(),
-                      color: Color(0xFFFF6B35),
+                      color: Color(0xFF5D340A),
                     ),
                   ),
                   SizedBox(width: 10),
@@ -561,14 +561,14 @@ class GameStartScreen extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFFFF6B35),
+                  Color(0xFF5D340A),
                   Color(0xFFFF8A50),
                 ],
               ),
               borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xFFFF6B35).withOpacity(0.3),
+                  color: Color(0xFF5D340A).withOpacity(0.3),
                   blurRadius: 20,
                   offset: Offset(0, 10),
                 ),
@@ -581,7 +581,7 @@ class GameStartScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30),
-          
+
           // Game title
           Text(
             'Word Match',
@@ -592,7 +592,7 @@ class GameStartScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          
+
           // Game description
           Text(
             'Match words from the left column\nwith their translations on the right!',
@@ -604,11 +604,11 @@ class GameStartScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 40),
-          
+
           // Game instructions
           GameInstructionCard(),
           SizedBox(height: 40),
-          
+
           // Start button
           GestureDetector(
             onTap: onStart,
@@ -620,14 +620,14 @@ class GameStartScreen extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFFFF6B35),
+                    Color(0xFF5D340A),
                     Color(0xFFFF8A50),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFFFF6B35).withOpacity(0.3),
+                    color: Color(0xFF5D340A).withOpacity(0.3),
                     blurRadius: 15,
                     offset: Offset(0, 5),
                   ),
@@ -707,7 +707,7 @@ class GameInstructionCard extends StatelessWidget {
         Icon(
           icon,
           size: 20,
-          color: Color(0xFFFF6B35),
+          color: Color(0xFF5D340A),
         ),
         SizedBox(width: 12),
         Expanded(
@@ -801,14 +801,14 @@ class DualGameArea extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               // Divider
               Container(
                 width: 2,
                 color: Colors.grey[200],
                 margin: EdgeInsets.symmetric(vertical: 20),
               ),
-              
+
               // Right Column
               Expanded(
                 child: Container(
@@ -845,7 +845,7 @@ class DualGameArea extends StatelessWidget {
               ),
             ],
           ),
-          
+
           // Pause overlay
           if (isGamePaused)
             Container(
@@ -871,7 +871,7 @@ class DualGameArea extends StatelessWidget {
                             Icon(
                               HugeIcons.strokeRoundedPause,
                               size: 50,
-                              color: Color(0xFFFF6B35),
+                              color: Color(0xFF5D340A),
                             ),
                             SizedBox(height: 10),
                             Text(
@@ -983,7 +983,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          
+
           // Title
           Text(
             'Game Paused',
@@ -994,7 +994,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30),
-          
+
           // Menu options
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedPlay,
@@ -1003,7 +1003,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onResume,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedRefresh,
             title: 'Restart Game',
@@ -1011,17 +1011,17 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onRestart,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
-            icon: soundEnabled 
-                ? HugeIcons.strokeRoundedVolumeHigh 
+            icon: soundEnabled
+                ? HugeIcons.strokeRoundedVolumeHigh
                 : HugeIcons.strokeRoundedVolumeMute01,
             title: soundEnabled ? 'Sound On' : 'Sound Off',
             subtitle: 'Toggle game sounds',
             onTap: onSoundToggle,
           ),
           SizedBox(height: 15),
-          
+
           PauseMenuTile(
             icon: HugeIcons.strokeRoundedLogout01,
             title: 'Exit Game',
@@ -1029,7 +1029,7 @@ class PauseMenuBottomSheet extends StatelessWidget {
             onTap: onExit,
             isDestructive: true,
           ),
-          
+
           SizedBox(height: 20),
         ],
       ),
@@ -1056,8 +1056,8 @@ class PauseMenuTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Color(0xFFFF6B35);
-    
+    final color = isDestructive ? Colors.red : Color(0xFF5D340A);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(

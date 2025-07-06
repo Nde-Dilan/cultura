@@ -261,7 +261,7 @@ class ProfileCard extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFF6B35),
+                      color: Color(0xFF5D340A),
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2),
                     ),
@@ -437,7 +437,7 @@ class StatsGrid extends StatelessWidget {
           icon: HugeIcons.strokeRoundedTranslate,
           label: 'Translations',
           value: totalTranslations.toString(),
-          color: Color(0xFFFF6B35),
+          color: Color(0xFF5D340A),
         ),
         StatCard(
           icon: HugeIcons.strokeRoundedFile02,
@@ -556,7 +556,7 @@ class QuickActionsGrid extends StatelessWidget {
           icon: HugeIcons.strokeRoundedGameController01,
           title: 'Play Games',
           subtitle: 'Practice language',
-          color: Color(0xFFFF6B35),
+          color: Color(0xFF5D340A),
           onTap: () {
             AppNavigator.push(context, PlayPage());
           },
@@ -752,7 +752,7 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Color(0xFFFF6B35);
+    final color = isDestructive ? Colors.red : Color(0xFF5D340A);
 
     return GestureDetector(
       onTap: onTap,

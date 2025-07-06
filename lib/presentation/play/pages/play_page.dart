@@ -41,14 +41,14 @@ class _PlayPageState extends State<PlayPage> {
                     // Motivational quote card
                     QuoteCard(),
                     SizedBox(height: 30),
-                    
+
                     // Games section title
                     Row(
                       children: [
                         Icon(
                           HugeIcons.strokeRoundedGameController01,
                           size: 24,
-                          color: Color(0xFFFF6B35),
+                          color: Color(0xFF5D340A),
                         ),
                         SizedBox(width: 10),
                         Text(
@@ -62,22 +62,24 @@ class _PlayPageState extends State<PlayPage> {
                       ],
                     ),
                     SizedBox(height: 20),
-                    
+
                     // Game cards
                     GameCard(
                       title: 'Word Drop Challenge',
-                      description: 'Catch falling words and match them with their correct translations! Test your reflexes and vocabulary.',
+                      description:
+                          'Catch falling words and match them with their correct translations! Test your reflexes and vocabulary.',
                       icon: HugeIcons.strokeRoundedFallingStar,
-                      color: Color(0xFFFF6B35),
+                      color: Color(0xFF5D340A),
                       onTap: () {
                         AppNavigator.push(context, FallingGamePage());
                       },
                     ),
                     SizedBox(height: 20),
-                    
+
                     GameCard(
                       title: 'Word Match Pairs',
-                      description: 'Match words from the left column with their translations on the right. Perfect for vocabulary building.',
+                      description:
+                          'Match words from the left column with their translations on the right. Perfect for vocabulary building.',
                       icon: HugeIcons.strokeRoundedTranslate,
                       color: Colors.blue,
                       onTap: () {
@@ -85,11 +87,11 @@ class _PlayPageState extends State<PlayPage> {
                       },
                     ),
                     SizedBox(height: 20),
-                    
+
                     // Coming soon section
                     ComingSoonCard(),
                     SizedBox(height: 30),
-                    
+
                     // Footer message
                     FooterMessage(),
                   ],
@@ -162,7 +164,7 @@ class PlayHeader extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 20),
-                  
+
                   // Title
                   Expanded(
                     child: Text(
@@ -174,7 +176,7 @@ class PlayHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   // Sound toggle
                   GestureDetector(
                     onTap: onSoundToggle,
@@ -186,8 +188,8 @@ class PlayHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        soundEnabled 
-                            ? HugeIcons.strokeRoundedVolumeHigh 
+                        soundEnabled
+                            ? HugeIcons.strokeRoundedVolumeHigh
                             : HugeIcons.strokeRoundedVolumeMute01,
                         color: Colors.white,
                         size: 20,
@@ -195,12 +197,10 @@ class PlayHeader extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10),
-                  
+
                   // Premium button
                   GestureDetector(
-                    onTap: () {
- 
-                     },
+                    onTap: () {},
                     child: Container(
                       width: 40,
                       height: 40,
@@ -336,7 +336,7 @@ class GameCard extends StatelessWidget {
               ),
             ),
             SizedBox(width: 20),
-            
+
             // Content
             Expanded(
               child: Column(
@@ -360,7 +360,7 @@ class GameCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12),
-                  
+
                   // Play button
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -462,7 +462,7 @@ class ComingSoonCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15),
-          
+
           // Upcoming games preview
           Row(
             children: [

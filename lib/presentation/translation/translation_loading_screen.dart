@@ -6,11 +6,13 @@ class TranslationLoadingScreen extends StatefulWidget {
   const TranslationLoadingScreen({
     super.key,
     required this.fileName,
+    required this.filePath,
     required this.onTranslationComplete,
     required this.onError,
   });
 
   final String fileName;
+  final String filePath;
   final Function(TranslationResult) onTranslationComplete;
   final Function(String) onError;
 
@@ -73,9 +75,8 @@ class _TranslationLoadingScreenState extends State<TranslationLoadingScreen>
 
     try {
       final result = await translationService.translateDocument(
-        filePath: '/dummy/path', // This would be the actual file path
+        filePath: widget.filePath, // This would be the actual file path
         fileName: widget.fileName,
-        targetLanguage: 'English',
       );
 
       if (mounted) {

@@ -59,7 +59,7 @@ kotlinOptions {
         release {
               storeFile file("keystore/release.keystore")
               storePassword  "123456789"
-              keyAlias "Cultura-key"
+              keyAlias "nerala-key"
               keyPassword  "123456789"
           
         }

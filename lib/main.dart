@@ -15,6 +15,8 @@ import 'package:cultura/service_locator.dart';
 //logging
 import 'package:logging/logging.dart';
 
+//TODO: Add the game, start the learn section, finish with translation + localstorage, finish the scenario and integrate with backend, 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

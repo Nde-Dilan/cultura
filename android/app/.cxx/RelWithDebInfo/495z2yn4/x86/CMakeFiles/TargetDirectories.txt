@@ -1,0 +1,2 @@
+C:/Users/NDE HURICH DILAN/FlutterProjects/cultiva-v1/android/app/.cxx/RelWithDebInfo/495z2yn4/x86/CMakeFiles/edit_cache.dir
+C:/Users/NDE HURICH DILAN/FlutterProjects/cultiva-v1/android/app/.cxx/RelWithDebInfo/495z2yn4/x86/CMakeFiles/rebuild_cache.dir

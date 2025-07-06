@@ -4,6 +4,8 @@ import 'package:cultura/common/services/document_scanning_service.dart';
 import 'package:cultura/common/services/file_import_service.dart';
 import 'package:cultura/presentation/main/pages/media_library_page.dart';
 import 'package:cultura/presentation/main/pages/scenario_page.dart';
+import 'package:cultura/presentation/main/widgets/recent_translation_section.dart';
+import 'package:cultura/presentation/translate/translate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -109,7 +111,6 @@ class _HomePageState extends State<HomePage>
                     indicatorSize: TabBarIndicatorSize.label,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
-                   
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -355,7 +356,7 @@ class ScrollableContent extends StatelessWidget {
           TranslationOptionsGrid(),
           SizedBox(height: 30),
           // Recent translations or other content
-          RecentTranslationsSection(),
+           RecentTranslationsSection(), 
         ],
       ),
     );
@@ -380,7 +381,7 @@ class TranslationOptionsGrid extends StatelessWidget {
           icon: Icons.text_fields,
           label: 'Text',
           onTap: () {
-            // Handle text translation
+            AppNavigator.push(context, TranslatePage());
           },
         ),
         TranslationOptionCard(
@@ -471,77 +472,7 @@ class TranslationOptionCard extends StatelessWidget {
   }
 }
 
-// Recent Translations Section Component
-class RecentTranslationsSection extends StatelessWidget {
-  const RecentTranslationsSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Recent Translations',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[800],
-          ),
-        ),
-        SizedBox(height: 15),
-        Container(
-          height: 120,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Container(
-                width: 200,
-                margin: EdgeInsets.only(right: 15),
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.grey[300]!),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Hello World',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Hola Mundo',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'EN → ES',
-                      style: TextStyle(
-                        color: Color(0xFF5D340A),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
+ 
 // Function to show More Options Bottom Sheet
 void _showMoreOptionsBottomSheet(BuildContext context) {
   showModalBottomSheet(

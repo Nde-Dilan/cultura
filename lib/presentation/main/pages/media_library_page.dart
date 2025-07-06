@@ -198,6 +198,7 @@ class _MediaLibraryPageState extends State<MediaLibraryPage> {
       MaterialPageRoute(
         builder: (context) => TranslationLoadingScreen(
           fileName: item.name,
+          filePath: item.filePath,
           onTranslationComplete: (result) {
             // Navigate to result page
             Navigator.of(context).pushReplacement(

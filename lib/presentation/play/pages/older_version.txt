@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart'; 
+import 'package:auto_route/auto_route.dart';
+import 'package:other_screens/presentation/dojo/controllers/falling_game_controller.dart';
+import 'package:other_screens/presentation/dojo/widgets/bottom_options.dart';
+import 'package:other_screens/presentation/dojo/widgets/falling_word.dart';
+import 'package:other_screens/presentation/learning/services/sound_effect_service.dart';
+import 'package:other_screens/shared/ui/constants.dart';
+
+@RoutePage()
+class FallingGamePage extends StatefulWidget {
+  const FallingGamePage({super.key});
+
+  @override
+  State<FallingGamePage> createState() => _FallingGamePageState();
+}
+
+class _FallingGamePageState extends State<FallingGamePage> {
+  final FallingGameController _gameController = FallingGameController();
+
+  @override
+  void initState() {
+    super.initState();
+    _gameController.startGame();
+    _listenForGameOver();
+  }
+  
+  void _listenForGameOver() {
+    _gameController.isGameOver.addListener(() {
+      if (_gameController.isGameOver.value) {
+        _showGameOverDialog();
+      }
+    });
+  }
+  
+  void _showGameOverDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Game Over'),
+        content: Text('Your score: ${_gameController.score.value}'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close dialog
+              _gameController.startGame(); // Restart game
+            },
+            child: const Text('Play Again'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close dialog
+              Navigator.of(context).pop(); // Return to previous screen
+            },
+            child: const Text('Exit'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _gameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: teal,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: ValueListenableBuilder<int>(
+          valueListenable: _gameController.score,
+          builder: (context, score, _) => Text('Score: $score', style: const TextStyle(color: white)),
+        ),
+        actions: [
+          ValueListenableBuilder<int>(
+            valueListenable: _gameController.remainingTime,
+            builder: (context, time, _) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Time: ${time}s',
+                style: const TextStyle(color: white),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.volume_up, color: white),
+            onPressed: () {
+              // Toggle sound
+              final soundService = SoundEffectService();
+              soundService.toggleMute();
+            },
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          FallingWord(gameController: _gameController),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomOptions(gameController: _gameController),
+          ),
+        ],
+      ),
+    );
+  }
+}

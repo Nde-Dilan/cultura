@@ -93,6 +93,8 @@ flutter:
     - assets/images/
     - assets/storyAssets/
     - assets/icons/
+    - assets/data/
+    - assets/data/combined_dictionaries.json
     - assets/icons/category/
     - assets/icons/words/
     - assets/icons/pricing/
