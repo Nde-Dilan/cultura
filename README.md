@@ -40,11 +40,14 @@ Cultura is a mobile application dedicated to preserving and revitalizing Cameroo
   <img src="/images/sign_up_page.png" alt="Registration Page" width="200"/>
   <img src="/images/landing_page.png" alt="Goal selection" width="200"/> 
 </div>
+<hr>
+<hr>
 <div align="center">
-  <img src="/images/onoarding.png" alt="Onboarding Screen" width="200"/>
-  <img src="/images/register.png" alt="Registration Page" width="200"/>
-  <img src="/images/goal.png" alt="Goal selection" width="200"/> 
+  <img src="/images/play_a_game.png" alt="Onboarding Screen" width="200"/>
+  <img src="/images/media_library.png" alt="Registration Page" width="200"/>
+  <img src="/images/concrete_scenario_page.png" alt="Goal selection" width="200"/> 
 </div>
+ 
 
 ## 🚀 Getting Started
 
