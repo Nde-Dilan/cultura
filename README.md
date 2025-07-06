@@ -9,30 +9,37 @@
 
 ## 📝 Description
 
-Cultura is a mobile application dedicated to preserving and revitalizing Cameroon's vernacular languages. Built with Flutter, it provides an interactive and engaging platform for learning local languages through various features including translations, stories, and cultural content.
+Cultura is a mobile application dedicated to preserving and revitalizing Cameroon's vernacular languages. Built with Flutter, it provides an interactive and engaging platform for learning local languages, translating and speaking with documents, through various features including translations, stories, and cultural content.
 
 ## ✨ Features
 
-- 🎴 **Interactive Flashcards**
+- 🎴 **Realtime Translation**
 
-  - Spaced repetition algorithm for optimal learning
-  - Visual and audio content
-  - Progress tracking
+  - Translation with custom models
+  - Document Translation
+  - Translation History
 
 - 📚 **Cultural Stories**
 
+  - Context-based learning
   - Short stories with translations
   - Cultural and historical narratives
-  - Context-based learning
 
 - 🎯 **Core Functionalities**
-  - User-friendly interface
-  - Progress tracking
+  - Scenario Based language learning
+  - Fats and Robust Document Scanning & translation
+  - Game Learning activities
   - Multi-device compatibility
   - Offline support
+  - Progress tracking
 
 ## 📱 Screenshots
 
+<div align="center">
+  <img src="/images/splash_screen.png" alt="Onboarding Screen" width="200"/>
+  <img src="/images/sign_up_page.png" alt="Registration Page" width="200"/>
+  <img src="/images/landing_page.png" alt="Goal selection" width="200"/> 
+</div>
 <div align="center">
   <img src="/images/onoarding.png" alt="Onboarding Screen" width="200"/>
   <img src="/images/register.png" alt="Registration Page" width="200"/>
@@ -109,4 +116,5 @@ For any inquiries, please reach out to [ndedilan504@gmail.com](mailto:ndedilan50
 ---
 
 Built with ❤️ for preserving Cameroon's cultural heritage
+
 # cultura
