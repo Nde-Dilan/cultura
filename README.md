@@ -71,17 +71,33 @@ flutter run
 ```
 
 ## 🧠 AI Backbone
-Our translation engine uses a fine-tuned FLAN-T5 model optimized for:
-- ✅ Low-resource efficiency (8-bit quantization + LoRA adapters)
-- ✅ Cultural accuracy (Trained on Fulfulde Bible corpus + community datasets)
+Our translation engine uses a fine-tuned neural machine translation model optimized for:
+- ✅ English to Fulfulde translation accuracy (BLEU score: 17.43)
+- ✅ Cultural context preservation (Based on Helsinki-NLP/opus-mt-en-ROMANCE)
+- ✅ Efficient inference (Optimized for mobile deployment)
 - ✅ Scalability (Future support for Bamoun, Ewondo, Bassa)
 
 Model Details:
 
 ```python
-from transformers import AutoModelForSeq2SeqLM
-model = AutoModelForSeq2SeqLM.from_pretrained("gervaisazangati/flan-t5-ft-fub2fr")
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load our fine-tuned English-to-Fulfulde model
+model = AutoModelForSeq2SeqLM.from_pretrained("linguo_mt_en_fub")
+tokenizer = AutoTokenizer.from_pretrained("linguo_mt_en_fub")
+
+# Translation pipeline
+def translate_to_fulfulde(text):
+    inputs = tokenizer(text, return_tensors="pt", padding=True)
+    outputs = model.generate(**inputs)
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
 ```
+
+### Model Performance
+- **Base Model**: Helsinki-NLP/opus-mt-en-ROMANCE
+- **Fine-tuning**: 3 epochs on English-Fulfulde parallel corpus
+- **BLEU Score**: 17.43 (evaluation set)
+- **Training Loss**: 0.6415 (final epoch)
 
 ## 💼 Business Model
 
