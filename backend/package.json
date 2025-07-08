@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.8.0",
+    "@google/generative-ai": "^0.24.1",
+    "an-array-of-french-words": "^2.0.0",
+    "child_process": "^1.0.2",
+    "execa": "^9.6.0",
+    "express": "^5.1.0",
+    "file-type": "^21.0.0",
+    "franc-min": "^6.2.0",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.3.0",
+    "multer": "^2.0.1",
+    "natural": "^8.1.0",
+    "node-fetch": "^3.3.2",
+    "path": "^0.12.7",
+    "sharp": "^0.34.2",
+    "tesseract.js": "^6.0.1",
+    "util": "^0.12.5"
+  }
+}

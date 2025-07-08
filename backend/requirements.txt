@@ -1,0 +1,9 @@
+tesseract.js
+fs-extra
+file-type
+child_process
+path
+util
+execa
+multer
+fs
